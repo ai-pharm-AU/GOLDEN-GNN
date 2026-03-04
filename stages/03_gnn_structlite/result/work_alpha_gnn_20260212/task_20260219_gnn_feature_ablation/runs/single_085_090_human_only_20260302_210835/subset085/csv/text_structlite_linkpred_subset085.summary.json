@@ -1,0 +1,70 @@
+{
+  "script": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/scripts/gnn_linkpred_holdout.py",
+  "git_sha": "65948752a4b1fc0057232bc03871233547911fe5",
+  "env": {
+    "python": "3.11.14",
+    "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.39",
+    "numpy": "1.26.4",
+    "pandas": "3.0.0",
+    "torch": "2.10.0+cu128",
+    "cuda_available": false,
+    "cuda_version": "12.8",
+    "device": "cpu",
+    "cuda_device_name": ""
+  },
+  "data": {
+    "edge_file": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835/subset085/inputs/edges_with_mtype_threshold_085_human.txt",
+    "feature_npz": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835/subset085/features/text_structlite_subset085.npz",
+    "num_nodes": 4298,
+    "input_dim": 388,
+    "n_edges_total": 6491,
+    "n_edges_train": 5193,
+    "n_edges_val": 649,
+    "n_edges_test": 649
+  },
+  "config": {
+    "weight_column": "NLOGPMF",
+    "edge_weight_transform": "log1p",
+    "hidden_dim": 256,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "weight_decay": 0.0,
+    "epochs": 120,
+    "eval_every": 10,
+    "patience": 0,
+    "val_ratio": 0.1,
+    "test_ratio": 0.1,
+    "pos_samples_per_epoch": 50000,
+    "seed": 42,
+    "split_seed": 42
+  },
+  "model": {
+    "n_params_trainable": 330240
+  },
+  "best": {
+    "epoch": 70,
+    "train_loss": 0.8543642163276672,
+    "val_loss": 0.9177588820457458,
+    "val_auc": 0.921721458401096,
+    "val_ap": 0.9377853712864842,
+    "test_auc": 0.9323790779224171,
+    "test_ap": 0.9457187341556682
+  },
+  "final_at_best": {
+    "val_loss": 0.9177588820457458,
+    "val_auc": 0.921721458401096,
+    "val_ap": 0.9377853712864842,
+    "test_loss": 0.8957724571228027,
+    "test_auc": 0.9323790779224171,
+    "test_ap": 0.9457187341556682
+  },
+  "outputs": {
+    "metrics_csv": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835/subset085/csv/text_structlite_linkpred_subset085.csv",
+    "summary_json": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835/subset085/csv/text_structlite_linkpred_subset085.summary.json",
+    "embedding_npz": "/home/zzz0054/GoldenF/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835/subset085/features/text_structlite_gnn_holdout_subset085.npz"
+  },
+  "runtime": {
+    "elapsed_sec": 5.892563581466675
+  }
+}

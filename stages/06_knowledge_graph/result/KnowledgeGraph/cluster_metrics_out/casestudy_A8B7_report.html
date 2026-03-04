@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Case Study: A8 vs B7 vs Intersection</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:#0d1117; color:#c9d1d9;
+  font-family:'Segoe UI',Roboto,sans-serif; padding:28px; }
+h1 { color:#f0f6fc; font-size:20px; margin-bottom:4px; }
+h2 { color:#8b949e; font-size:14px; margin:28px 0 10px; text-transform:uppercase;
+  letter-spacing:.07em; border-bottom:1px solid #21262d; padding-bottom:5px; }
+p.sub { color:#8b949e; font-size:12px; margin-bottom:22px; }
+table.stats { border-collapse:collapse; width:100%; font-size:12px; margin-bottom:28px; }
+table.stats th { padding:8px 12px; text-align:center; border-bottom:2px solid #21262d; }
+table.stats td { padding:6px 12px; border-bottom:1px solid #21262d; text-align:center; }
+table.stats td.row-label { text-align:left; color:#8b949e; white-space:nowrap; }
+table.stats tr:hover td { background:#161b22; }
+.cent-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.cent-block { background:#161b22; border:1px solid #30363d;
+  border-radius:6px; padding:12px; }
+.cent-title { font-weight:700; font-size:13px; margin-bottom:8px; }
+table.cent-table { width:100%; font-size:11px; border-collapse:collapse; }
+table.cent-table th { color:#8b949e; text-align:left; padding:3px 6px;
+  border-bottom:1px solid #21262d; }
+table.cent-table td { padding:3px 6px; border-bottom:1px solid #21262d; }
+</style>
+</head>
+<body>
+<h1>Case Study: A8 &nbsp;·&nbsp; B7 &nbsp;·&nbsp; Intersection</h1>
+<p class="sub">
+  Full = all 6 edge types &nbsp;|&nbsp;
+  Sparse = gene_overlap + pubmed_costudy + shared_go_bp
+</p>
+
+<h2>Graph Statistics</h2>
+<table class="stats">
+<thead>
+<tr><th style="text-align:left">Metric</th><th style="background:#1a3a5c;color:#4a9eff">A8 (full)</th><th style="background:#0f2a4a;color:#4a9eff">A8 (sparse)</th><th style="background:#3a1a1a;color:#ff8c42">B7 (full)</th><th style="background:#2a0f0f;color:#ff8c42">B7 (sparse)</th><th style="background:#1a3a1a;color:#50c878">Intersect (full)</th><th style="background:#0f2a0f;color:#50c878">Intersect (sparse)</th></tr>
+</thead>
+<tbody>
+<tr><td class="row-label">Nodes</td><td style="">261</td><td style="">261</td><td style="font-weight:700;color:#f0f6fc">268</td><td style="font-weight:700;color:#f0f6fc">268</td><td style="">181</td><td style="">181</td></tr>
+<tr><td class="row-label">Edges</td><td style="">33,341</td><td style="">1,982</td><td style="font-weight:700;color:#f0f6fc">35,636</td><td style="">1,122</td><td style="">16,290</td><td style="">560</td></tr>
+<tr><td class="row-label">Components</td><td style="">1</td><td style="">4</td><td style="">1</td><td style="font-weight:700;color:#f0f6fc">117</td><td style="">1</td><td style="">94</td></tr>
+<tr><td class="row-label">Largest CC (nodes)</td><td style="">261</td><td style="">255</td><td style="font-weight:700;color:#f0f6fc">268</td><td style="">117</td><td style="">181</td><td style="">57</td></tr>
+<tr><td class="row-label">Largest CC (%)</td><td style="font-weight:700;color:#f0f6fc">100.0%</td><td style="">97.7%</td><td style="font-weight:700;color:#f0f6fc">100.0%</td><td style="">43.7%</td><td style="font-weight:700;color:#f0f6fc">100.0%</td><td style="">31.5%</td></tr>
+<tr><td class="row-label">Isolated Nodes</td><td style="">0</td><td style="">1</td><td style="">0</td><td style="font-weight:700;color:#f0f6fc">94</td><td style="">0</td><td style="">74</td></tr>
+<tr><td class="row-label">Isolated (%)</td><td style="">0.0%</td><td style="">0.4%</td><td style="">0.0%</td><td style="">35.1%</td><td style="">0.0%</td><td style="font-weight:700;color:#f0f6fc">40.9%</td></tr>
+<tr><td class="row-label">Density</td><td style="">0.9826</td><td style="">0.0584</td><td style="">0.9960</td><td style="">0.0314</td><td style="font-weight:700;color:#f0f6fc">1.0000</td><td style="">0.0344</td></tr>
+<tr><td class="row-label">Mean Degree</td><td style="">255.4900</td><td style="">15.1900</td><td style="font-weight:700;color:#f0f6fc">265.9400</td><td style="">8.3700</td><td style="">180.0000</td><td style="">6.1900</td></tr>
+<tr><td class="row-label">Avg Clustering Coeff</td><td style="">0.9903</td><td style="">0.6205</td><td style="">0.9966</td><td style="">0.4211</td><td style="font-weight:700;color:#f0f6fc">1.0000</td><td style="">0.4343</td></tr>
+<tr><td class="row-label">Transitivity (Aggr. Index)</td><td style="">0.9903</td><td style="">0.5143</td><td style="">0.9966</td><td style="">0.7132</td><td style="font-weight:700;color:#f0f6fc">1.0000</td><td style="">0.9178</td></tr>
+<tr><td class="row-label">Edges: gene_overlap</td><td style="">0</td><td style="font-weight:700;color:#f0f6fc">617</td><td style="">0</td><td style="">8</td><td style="">0</td><td style="">1</td></tr>
+<tr><td class="row-label">Edges: pubmed_costudy</td><td style="">0</td><td style="font-weight:700;color:#f0f6fc">199</td><td style="">0</td><td style="">196</td><td style="">0</td><td style="">121</td></tr>
+<tr><td class="row-label">Edges: shared_mesh_term</td><td style="font-weight:700;color:#f0f6fc">765</td><td style="">0</td><td style="">161</td><td style="">0</td><td style="">0</td><td style="">0</td></tr>
+<tr><td class="row-label">Edges: shared_pathway</td><td style="">7,757</td><td style="">0</td><td style="font-weight:700;color:#f0f6fc">17,522</td><td style="">0</td><td style="">705</td><td style="">0</td></tr>
+<tr><td class="row-label">Edges: shared_disease</td><td style="font-weight:700;color:#f0f6fc">23,653</td><td style="">0</td><td style="">17,035</td><td style="">0</td><td style="">15,179</td><td style="">0</td></tr>
+<tr><td class="row-label">Edges: shared_go_bp</td><td style="font-weight:700;color:#f0f6fc">1,166</td><td style="font-weight:700;color:#f0f6fc">1,166</td><td style="">918</td><td style="">918</td><td style="">406</td><td style="">438</td></tr>
+
+</tbody>
+</table>
+
+<h2>Top 10 Nodes by Degree Centrality</h2>
+<div class="cent-grid">
+
+<div class="cent-block">
+  <div class="cent-title" style="color:#4a9eff">A8 (full)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX031877</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX032200</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX123922</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX024041</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX054991</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX006295</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX009143</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX015592</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX019277</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+<tr><td>GEX025072</td><td>1.0000</td><td>0.000151</td><td>1.0000</td></tr>
+</tbody>
+  </table>
+</div>
+<div class="cent-block">
+  <div class="cent-title" style="color:#4a9eff">A8 (sparse)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX064243</td><td>0.5923</td><td>0.259527</td><td>0.6931</td></tr>
+<tr><td>GEX083335</td><td>0.5385</td><td>0.216717</td><td>0.6479</td></tr>
+<tr><td>GEX088086</td><td>0.3769</td><td>0.141452</td><td>0.5936</td></tr>
+<tr><td>GEX077989</td><td>0.3231</td><td>0.096006</td><td>0.5490</td></tr>
+<tr><td>GEX008290</td><td>0.2808</td><td>0.044740</td><td>0.5490</td></tr>
+<tr><td>GEX090280</td><td>0.2731</td><td>0.021307</td><td>0.5466</td></tr>
+<tr><td>GEX003300</td><td>0.2577</td><td>0.023668</td><td>0.5442</td></tr>
+<tr><td>GEX087861</td><td>0.2385</td><td>0.019421</td><td>0.5359</td></tr>
+<tr><td>GEX123111</td><td>0.2231</td><td>0.009916</td><td>0.5246</td></tr>
+<tr><td>GEX095459</td><td>0.2192</td><td>0.015784</td><td>0.5383</td></tr>
+</tbody>
+  </table>
+</div>
+<div class="cent-block">
+  <div class="cent-title" style="color:#ff8c42">B7 (full)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX000213</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX002248</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX005084</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX007227</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX011260</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX013517</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX023312</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX031877</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX032200</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+<tr><td>GEX108063</td><td>1.0000</td><td>0.000018</td><td>1.0000</td></tr>
+</tbody>
+  </table>
+</div>
+<div class="cent-block">
+  <div class="cent-title" style="color:#ff8c42">B7 (sparse)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX095459</td><td>0.1985</td><td>0.022912</td><td>0.2739</td></tr>
+<tr><td>GEX087861</td><td>0.1760</td><td>0.029308</td><td>0.2625</td></tr>
+<tr><td>GEX121649</td><td>0.1573</td><td>0.017729</td><td>0.2458</td></tr>
+<tr><td>GEX031947</td><td>0.1573</td><td>0.021086</td><td>0.2446</td></tr>
+<tr><td>GEX109359</td><td>0.1461</td><td>0.006562</td><td>0.2470</td></tr>
+<tr><td>GEX026636</td><td>0.1461</td><td>0.003935</td><td>0.2470</td></tr>
+<tr><td>GEX053741</td><td>0.1461</td><td>0.006012</td><td>0.2458</td></tr>
+<tr><td>GEX003394</td><td>0.1461</td><td>0.008424</td><td>0.2322</td></tr>
+<tr><td>GEX096382</td><td>0.1461</td><td>0.008948</td><td>0.2291</td></tr>
+<tr><td>GEX028358</td><td>0.1423</td><td>0.004844</td><td>0.2291</td></tr>
+</tbody>
+  </table>
+</div>
+<div class="cent-block">
+  <div class="cent-title" style="color:#50c878">Intersect (full)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX000213</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX002248</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX005084</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX007227</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX011260</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX013517</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX023312</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX031877</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX032200</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+<tr><td>GEX108063</td><td>1.0000</td><td>0.000000</td><td>1.0000</td></tr>
+</tbody>
+  </table>
+</div>
+<div class="cent-block">
+  <div class="cent-title" style="color:#50c878">Intersect (sparse)</div>
+  <table class="cent-table">
+  <thead><tr><th>gs_id</th><th>Degree</th><th>Betweenness</th><th>Closeness</th></tr></thead>
+  <tbody><tr><td>GEX002248</td><td>0.1944</td><td>0.005959</td><td>0.2234</td></tr>
+<tr><td>GEX005084</td><td>0.1944</td><td>0.005959</td><td>0.2234</td></tr>
+<tr><td>GEX013517</td><td>0.1944</td><td>0.005959</td><td>0.2234</td></tr>
+<tr><td>GEX087861</td><td>0.1944</td><td>0.021912</td><td>0.2263</td></tr>
+<tr><td>GEX121649</td><td>0.1833</td><td>0.011173</td><td>0.2178</td></tr>
+<tr><td>GEX027120</td><td>0.1778</td><td>0.009870</td><td>0.2151</td></tr>
+<tr><td>GEX000990</td><td>0.1722</td><td>0.006704</td><td>0.2125</td></tr>
+<tr><td>GEX015176</td><td>0.1722</td><td>0.006704</td><td>0.2125</td></tr>
+<tr><td>GEX085554</td><td>0.1667</td><td>0.003414</td><td>0.2099</td></tr>
+<tr><td>GEX095459</td><td>0.1667</td><td>0.001676</td><td>0.2099</td></tr>
+</tbody>
+  </table>
+</div>
+</div>
+</body>
+</html>

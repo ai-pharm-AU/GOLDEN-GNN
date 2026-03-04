@@ -1,0 +1,19 @@
+{
+  "weights": {
+    "w_ss": 0.8,
+    "w_jc": 0.2,
+    "w_npmi": 0.0
+  },
+  "threshold": 0.8,
+  "total_gene_sets": 124020,
+  "total_pairs_scanned": 6267691173,
+  "nodes_extracted": 28437,
+  "node_percentage": 22.93,
+  "edges_extracted": 176163,
+  "avg_degree": 12.39,
+  "median_degree": 2,
+  "max_degree": 4988,
+  "runtime_pass1_minutes": 142.06,
+  "runtime_pass2_minutes": 152.16,
+  "total_runtime_minutes": 294.51
+}

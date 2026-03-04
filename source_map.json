@@ -1,0 +1,472 @@
+{
+  "title": "GoldenF Deliverables",
+  "description": "Self-contained, upload-ready GitHub package for code, docs, and selected results across the full pipeline.",
+  "stages": [
+    {
+      "id": "01",
+      "slug": "mtype",
+      "name": "mtype Build",
+      "summary": "Gene-overlap edge construction with composite Jaccard-Simpson similarity and hypergeometric filtering.",
+      "items": [
+        {
+          "path": "mtype.py",
+          "kind": "code",
+          "required": true,
+          "description": "Core mtype similarity and hypergeometric computation script."
+        },
+        {
+          "path": "docs/gene_overlap_edge_methodology.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Method write-up for overlap edges and significance filtering."
+        },
+        {
+          "path": "data/geneset_extraction_080/edges_with_mtype.txt",
+          "kind": "result",
+          "required": true,
+          "description": "Threshold-0.80 edge file with mtype-derived fields."
+        },
+        {
+          "path": "data/geneset_extraction_080/extraction_summary.json",
+          "kind": "result",
+          "required": true,
+          "description": "Extraction summary statistics for threshold 0.80."
+        },
+        {
+          "path": "data/geneset_extraction_085/edges.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Threshold-0.85 extracted edge table."
+        },
+        {
+          "path": "data/geneset_extraction_085/extraction_summary.json",
+          "kind": "result",
+          "required": true,
+          "description": "Extraction summary statistics for threshold 0.85."
+        },
+        {
+          "path": "data/geneset_extraction_090/edges.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Threshold-0.90 extracted edge table."
+        },
+        {
+          "path": "data/geneset_extraction_090/extraction_summary.json",
+          "kind": "result",
+          "required": true,
+          "description": "Extraction summary statistics for threshold 0.90."
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python mtype.py --help",
+        "python mtype.py --gene-sets GO2gene_aggregate.txt --output m_type_hybrid --alpha 0.8 --threads 6"
+      ]
+    },
+    {
+      "id": "02",
+      "slug": "gnn_text",
+      "name": "GNN (Text)",
+      "summary": "GraphSAGE-style unsupervised embedding training and holdout evaluation using text/GO-derived features.",
+      "items": [
+        {
+          "path": "work_alpha_gnn_20260212/scripts/gnn_unsupervised_pilot.py",
+          "kind": "code",
+          "required": true,
+          "description": "Pilot unsupervised GNN training script."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/gnn_linkpred_holdout.py",
+          "kind": "code",
+          "required": true,
+          "description": "Holdout link-prediction training and embedding export."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/evaluate_single_embedding.py",
+          "kind": "code",
+          "required": true,
+          "description": "Internal clustering metric evaluation for a single embedding."
+        },
+        {
+          "path": "docs/revised_gnn_representation_learning.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Code-aligned GNN representation-learning description."
+        },
+        {
+          "path": "docs/gnn_architecture_config.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Architecture/training/evaluation configuration summary."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/README.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Main reproducibility guide for alpha + GNN workbench."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/embeddings/gnn_pilot_embeddings_l2.npz",
+          "kind": "result",
+          "required": true,
+          "description": "Pilot GNN embedding (L2-normalized)."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/embeddings/gnn_holdout_embeddings_l2.npz",
+          "kind": "result",
+          "required": true,
+          "description": "Holdout GNN embedding (L2-normalized)."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/artifacts/csv/eval_gnn_holdout_l2_robust.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Robust internal-metric evaluation for holdout GNN."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/baseline/gnn_vs_golden_summary_by_k.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Summary comparison between GNN and golden fusion baselines."
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python work_alpha_gnn_20260212/scripts/gnn_unsupervised_pilot.py --edge_file data/geneset_extraction_080/edges_with_mtype.txt --feature_npz data/RummaGEO/rummageo_go_embeddings.npz --weight_column NLOGPMF --hidden_dim 256 --num_layers 2 --epochs 200 --lr 1e-3 --dropout 0.1 --pos_samples_per_epoch 50000 --output_npz work_alpha_gnn_20260212/embeddings/gnn_pilot_embeddings.npz --metrics_csv work_alpha_gnn_20260212/artifacts/csv/gnn_pilot_training_curve.csv",
+        "python work_alpha_gnn_20260212/scripts/gnn_linkpred_holdout.py --edge_file data/geneset_extraction_080/edges_with_mtype.txt --feature_npz data/RummaGEO/rummageo_go_embeddings.npz --output_csv work_alpha_gnn_20260212/artifacts/csv/gnn_holdout_linkpred.csv --output_npz work_alpha_gnn_20260212/embeddings/gnn_holdout_embeddings.npz",
+        "python work_alpha_gnn_20260212/scripts/evaluate_single_embedding.py --embedding_file work_alpha_gnn_20260212/embeddings/gnn_holdout_embeddings_l2.npz --gs_file data/RummaGEO/gs_ids.txt --algos kmeans --k_list 10,20,30,40,50 --seeds 13,42,77 --output_csv work_alpha_gnn_20260212/artifacts/csv/eval_gnn_holdout_l2.csv"
+      ]
+    },
+    {
+      "id": "03",
+      "slug": "gnn_structlite",
+      "name": "GNN Structlite",
+      "summary": "Feature-ablation and text+structlite GNN runs for subset 0.85/0.90 analyses.",
+      "items": [
+        {
+          "path": "work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/scripts",
+          "kind": "code",
+          "required": true,
+          "description": "Structlite feature builder, run drivers, and reporting scripts.",
+          "copy_mode": "dir"
+        },
+        {
+          "path": "docs/plans/2026-02-26-cluster-correspondence-report.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Plan and methodology for text-only vs structlite cluster correspondence."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835",
+          "kind": "result",
+          "required": true,
+          "description": "Main human-only structlite run outputs.",
+          "copy_mode": "dir"
+        },
+        {
+          "path": "outputs/human_only_combined_clean/umap_gnn_textonly_vs_structlite_subset085.png",
+          "kind": "result",
+          "required": true,
+          "description": "Subset 0.85 text-only vs structlite UMAP comparison."
+        },
+        {
+          "path": "outputs/human_only_combined_clean/umap_gnn_textonly_vs_structlite_subset090.png",
+          "kind": "result",
+          "required": true,
+          "description": "Subset 0.90 text-only vs structlite UMAP comparison."
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/scripts/run_single_085_090_human_only.py --device cpu",
+        "python work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/scripts/map_cluster_correspondence.py --run_dir work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/runs/single_085_090_human_only_20260302_210835 --output_dir work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/reports/plots"
+      ]
+    },
+    {
+      "id": "04",
+      "slug": "metrics",
+      "name": "Internal, Consistency, Confound, Enrichment Metrics",
+      "summary": "Unified metrics layer covering internal clustering quality, modality consistency, confounds, and enrichment validation.",
+      "items": [
+        {
+          "path": "work_alpha_gnn_20260212/scripts/modality_consistency_report.py",
+          "kind": "code",
+          "required": true,
+          "description": "GO-vs-PAGER modality consistency computation and plots."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/analyze_mesh_vs_gse_confound.py",
+          "kind": "code",
+          "required": true,
+          "description": "Confound analysis (MeSH vs GSE vs platform)."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/validate_cluster_meta_enrichment.py",
+          "kind": "code",
+          "required": true,
+          "description": "Metadata enrichment and text-coherence validation."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/run_gnn_enrichment.py",
+          "kind": "code",
+          "required": true,
+          "description": "Cluster-level ORA enrichment pipeline."
+        },
+        {
+          "path": "docs/metrics_reference.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Metric definitions and interpretation reference."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/bio_validation_090_k10/validation_report.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Main bio-validation report (subset 0.90, k=10)."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/bio_validation_090_k10/mesh_vs_gse_confound_seed11.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Confound check readout for seed 11."
+        },
+        {
+          "path": "outputs/human_only_combined_clean/internal_metrics_combined.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Combined internal clustering metrics across methods."
+        },
+        {
+          "path": "outputs/human_only_combined_clean/meta_enrichment_combined.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Combined metadata enrichment metrics across methods."
+        },
+        {
+          "path": "outputs/human_only_combined_clean/all_analyses_combined.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Merged table of internal, stability, confound, and enrichment analyses."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/baseline/modality_consistency_summary.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Modality consistency summary statistics."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/enrichment/20260213_k10_seed11",
+          "kind": "result",
+          "required": true,
+          "description": "Seeded enrichment run outputs (summary, report, term tables).",
+          "copy_mode": "dir"
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python work_alpha_gnn_20260212/scripts/modality_consistency_report.py --go_embedding_file data/RummaGEO/rummageo_go_embeddings.npz --pager_embedding_file data/RummaGEO/rummageo_pager_embeddings.npz --cut_dim 384 --pairwise_sample_size 1800 --pairwise_seeds 7,11,19,23,31 --neighbor_k_list 5,10,20,50 --cluster_k_list 10,20,30,40,50 --cluster_seeds 11,22,33",
+        "python work_alpha_gnn_20260212/scripts/validate_cluster_meta_enrichment.py --embedding_npz work_alpha_gnn_20260212/subset_85_90_20260213/embeddings/gnn_holdout_subset_090_l2.npz --enriched_metadata_csv work_alpha_gnn_20260212/reports/bio_meta_cache_090/enriched_gs_metadata.csv --k 10 --seeds 11,12,13,14,15 --n_perm 200 --output_dir work_alpha_gnn_20260212/reports/bio_validation_090_k10",
+        "python work_alpha_gnn_20260212/scripts/analyze_mesh_vs_gse_confound.py --help",
+        "python work_alpha_gnn_20260212/scripts/run_gnn_enrichment.py --help"
+      ]
+    },
+    {
+      "id": "05",
+      "slug": "visualizations",
+      "name": "Visualizations",
+      "summary": "Cross-stage figure outputs (internal metrics, enrichment, UMAP, stability, and poster-ready assets).",
+      "items": [
+        {
+          "path": "work_alpha_gnn_20260212/scripts/build_combined_poster_085_090.py",
+          "kind": "code",
+          "required": true,
+          "description": "Combined poster builder for subset 0.85/0.90 analyses."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/scripts/plot_embedding_umap_scatter.py",
+          "kind": "code",
+          "required": true,
+          "description": "UMAP scatter plotting utility."
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/poster_20260219_085_090/README.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Poster output notes and artifact pointers."
+        },
+        {
+          "path": "outputs/human_only_combined_clean",
+          "kind": "result",
+          "required": true,
+          "description": "Consolidated clean figure/table outputs for internal+bio validation.",
+          "copy_mode": "dir"
+        },
+        {
+          "path": "work_alpha_gnn_20260212/artifacts/plots",
+          "kind": "result",
+          "required": true,
+          "description": "Workbench-generated plot artifacts.",
+          "copy_mode": "dir"
+        },
+        {
+          "path": "work_alpha_gnn_20260212/reports/poster_20260219_085_090/poster_alpha05_fusion_vs_gnn_subset085_090.pdf",
+          "kind": "result",
+          "required": true,
+          "description": "Poster-format summary figure set."
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python work_alpha_gnn_20260212/scripts/plot_embedding_umap_scatter.py --help",
+        "python work_alpha_gnn_20260212/scripts/build_combined_poster_085_090.py --help"
+      ]
+    },
+    {
+      "id": "06",
+      "slug": "knowledge_graph",
+      "name": "Knowledge Graph",
+      "summary": "KG construction, cluster-level graph metrics, matched comparisons, sparse visual dashboards, and case-study outputs.",
+      "items": [
+        {
+          "path": "KnowledgeGraph/build_kg.py",
+          "kind": "code",
+          "required": true,
+          "description": "KG construction pipeline and core shared utilities."
+        },
+        {
+          "path": "KnowledgeGraph/kg_cluster_metrics.py",
+          "kind": "code",
+          "required": true,
+          "description": "Build KGs and compute metrics for all A/B cluster groups."
+        },
+        {
+          "path": "KnowledgeGraph/kg_matched_comparison.py",
+          "kind": "code",
+          "required": true,
+          "description": "Matched cluster-pair KG comparison report generation."
+        },
+        {
+          "path": "KnowledgeGraph/kg_cluster_summarize.py",
+          "kind": "code",
+          "required": true,
+          "description": "LLM-driven cluster summary generation from KG evidence."
+        },
+        {
+          "path": "KnowledgeGraph/kg_cluster_vis_sparse.py",
+          "kind": "code",
+          "required": true,
+          "description": "Sparse visualization renderer for cluster KG pages."
+        },
+        {
+          "path": "KnowledgeGraph/vis_case_study_A8_B7.py",
+          "kind": "code",
+          "required": true,
+          "description": "Case-study visual comparison script for A8 vs B7 clusters."
+        },
+        {
+          "path": "KnowledgeGraph/findings_cluster8_kg_visualization.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Narrative findings from cluster-8 KG visualization."
+        },
+        {
+          "path": "docs/gene_overlap_edge_methodology.md",
+          "kind": "doc",
+          "required": true,
+          "description": "Methodology note linking mtype construction and KG assembly."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/graph_stats.csv",
+          "kind": "result",
+          "required": true,
+          "description": "KG graph-level statistics summary table."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/cluster_summaries.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Cluster-level biological summary CSV."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/cluster_summaries.html",
+          "kind": "result",
+          "required": true,
+          "description": "Cluster-level biological summary dashboard."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/cluster_matched_comparison.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Matched A/B cluster comparison metrics."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/comparison.html",
+          "kind": "result",
+          "required": true,
+          "description": "Matched A/B cluster comparison HTML report."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/index.html",
+          "kind": "result",
+          "required": true,
+          "description": "Main KG cluster metrics dashboard index."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/vis_sparse/index_sparse.html",
+          "kind": "result",
+          "required": true,
+          "description": "Sparse KG visual index across groups."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/vis_sparse/case_study_A8_B7.html",
+          "kind": "result",
+          "required": true,
+          "description": "Case-study sparse HTML visualization for A8 vs B7."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/casestudy_A8B7_report.html",
+          "kind": "result",
+          "required": true,
+          "description": "Case-study narrative HTML report for A8/B7."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/casestudy_A8B7_stats.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Case-study edge-type statistics for A8/B7."
+        },
+        {
+          "path": "KnowledgeGraph/cluster_metrics_out/casestudy_A8B7_centrality.csv",
+          "kind": "result",
+          "required": true,
+          "description": "Case-study centrality table for A8/B7."
+        },
+        {
+          "path": "KnowledgeGraph/kg_sparse_network.html",
+          "kind": "result",
+          "required": true,
+          "description": "Interactive sparse-network KG visualization."
+        },
+        {
+          "path": "KnowledgeGraph/kg_adjacency_heatmaps.png",
+          "kind": "result",
+          "required": true,
+          "description": "KG edge-type adjacency heatmap panel."
+        },
+        {
+          "path": "KnowledgeGraph/kg_edge_summary.png",
+          "kind": "result",
+          "required": true,
+          "description": "Edge-type summary figure."
+        }
+      ],
+      "repro_commands": [
+        "source /home/zzz0054/GoldenF/.venv/bin/activate",
+        "python KnowledgeGraph/kg_cluster_metrics.py",
+        "python KnowledgeGraph/kg_matched_comparison.py",
+        "python KnowledgeGraph/kg_cluster_summarize.py",
+        "python KnowledgeGraph/vis_case_study_A8_B7.py"
+      ]
+    }
+  ]
+}

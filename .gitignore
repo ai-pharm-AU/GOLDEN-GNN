@@ -1,0 +1,36 @@
+# ── HuggingFace-only files ────────────────────────────────────────────────────
+# These are tracked in HF_UPLOAD_QUEUE.csv and should NOT be committed to git.
+# Upload them separately via huggingface_hub CLI or hf_transfer.
+
+# Necessary caches for kg_cluster_metrics.py (~280 MB total)
+KnowledgeGraph/enrichr_cache.json
+KnowledgeGraph/gene_members_cache.json
+KnowledgeGraph/pathway_cache.json
+
+# Large pre-computed edge lists (~7 GB total)
+KnowledgeGraph/cluster_metrics_out/edges_A*.csv
+KnowledgeGraph/cluster_metrics_out/edges_B*.csv
+
+# Large pre-computed interactive visualizations (~3.4 GB total)
+# Note: vis_sparse/ is kept on GitHub (< 2 MB)
+KnowledgeGraph/cluster_metrics_out/vis_A*.html
+KnowledgeGraph/cluster_metrics_out/vis_B*.html
+
+# ── Dangling absolute-path symlinks ───────────────────────────────────────────
+# These symlinks use absolute host paths and will be broken on any other checkout.
+# The real files already exist under deliverables/data/.
+outputs/runs/*/subset085/inputs/
+outputs/runs/*/subset090/inputs/
+
+# ── Local/generated artifacts to keep repo lean ───────────────────────────────
+tmp/
+outputs/
+rerun/
+
+# Python cache/bytecode
+**/__pycache__/
+*.pyc
+
+# Local virtual envs
+.venv/
+venv/
