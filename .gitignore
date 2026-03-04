@@ -34,3 +34,8 @@ rerun/
 # Local virtual envs
 .venv/
 venv/
+
+# LLM model related files
+.claude/*
+.github/*
+CLAUDE.md
