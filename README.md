@@ -1,4 +1,8 @@
-# GoldenF
+# GOLDEN-GNN: Advancing Interpretable Cross-Domain Data Harmonization in the CFDE
+Zeru Zhang1, Qi Li2, Cody Nichols3, Robert S Welner4, Hao Chen*, Jake Y. Chen5*, and Zongliang Yue1*
+1. Health Outcomes Research and Policy, Harrison College of Pharmacy, Auburn University, AL, USA
+ 2. Mathematics and Computer Science Department, School of Natural Sciences Mathematics & Business, Fisk University, TN, USA3. Computer Science and Software Engineering Department, Samuel Ginn College of Engineering, Auburn University, Auburn, AL, USA4 Hematology & Oncology, School of Medicine, University of Alabama at Birmingham, AL, USA5. Biomedical Informatics and Data Science, School of Medicine, University of Alabama at Birmingham, AL, USA Contact: hzc0134@auburn.edu, jakechen@uab.edu, and zzy0065@auburn.edu
+
 
 ## Deliverables Index
 
@@ -7,7 +11,7 @@
 - Stage-by-stage commands: [`REPRO_COMMANDS.md`](REPRO_COMMANDS.md)
 - Consistency verification script: `python verify_consistency.py`
 
-# 🧠 Human-Only GNN Structlite and Knowledge Graph Deliverables Tool
+# Human-Only GNN Structlite and Knowledge Graph Deliverables Tool
 
 This deliverables package reproduces the human-only subset `0.85/0.90` workflow from local code in this repository. It runs Stage 03 (GNN Structlite + metrics/plots) and Stage 06 (knowledge graph analysis), then writes run artifacts, tables, and interactive HTML outputs.
 
@@ -15,20 +19,20 @@ Large files over `95MB` are listed in [`HF_UPLOAD_QUEUE.csv`](HF_UPLOAD_QUEUE.cs
 
 ---
 
-## ✨ Features
+## Features
 
-* 🔄 **One-command orchestration** using `run_pipeline.sh`:
+* **One-command orchestration** using `run_pipeline.sh`:
 
   * Stage 03 human-only regeneration (`subset085`, `subset090`)
   * Stage 06 KG metrics, matched comparison, cluster summaries, case-study visualization
-* 🧬 Uses shipped human-only inputs in [`data/human_only_085_090/`](data/human_only_085_090/README.md)
-* 📈 Produces UMAP plots, internal metrics tables, and additional comparison metrics
-* 🕸️ Produces KG CSV/HTML outputs under `KnowledgeGraph/cluster_metrics_out/`
-* 🧾 Includes reproducibility/support files: `REPRO_COMMANDS.md`, `MANIFEST.csv`, `HF_UPLOAD_QUEUE.csv`, `_meta/source_map.json`
+* Uses shipped human-only inputs in [`data/human_only_085_090/`](data/human_only_085_090/README.md)
+* Produces UMAP plots, internal metrics tables, and additional comparison metrics
+* Produces KG CSV/HTML outputs under `KnowledgeGraph/cluster_metrics_out/`
+* Includes reproducibility/support files: `REPRO_COMMANDS.md`, `MANIFEST.csv`, `HF_UPLOAD_QUEUE.csv`, `_meta/source_map.json`
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Install dependencies:
 
@@ -52,7 +56,7 @@ Ensure your project has:
 
 ---
 
-## 🏁 Usage
+## Usage
 
 General command:
 
@@ -73,7 +77,7 @@ python code/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/scripts/r
 
 ---
 
-## 🔧 Command-Line Arguments
+## Command-Line Arguments
 
 | Argument | Type | Default | Description |
 | ------------------------------ | ------ | ---------------------------------- | ------------------------------------------------------------------------------- |
@@ -91,7 +95,7 @@ python code/work_alpha_gnn_20260212/task_20260219_gnn_feature_ablation/scripts/r
 
 ---
 
-## 📤 Output Files
+## Output Files
 
 If `run_pipeline.sh` is used:
 
@@ -136,7 +140,7 @@ vis_sparse/case_study_A8_B7.html
 
 ---
 
-## 🧠 How It Works (Overview)
+## How It Works (Overview)
 
 1. **Activate env and parse runtime options** from `run_pipeline.sh`.
 2. **Run Stage 03 regeneration** with `run_single_085_090_human_only.py` on `subset085/090`.
@@ -147,7 +151,7 @@ vis_sparse/case_study_A8_B7.html
 
 ---
 
-## 🧪 Supported Clustering Methods
+## Supported Clustering Methods
 
 ### Embedding variants evaluated:
 
@@ -162,7 +166,7 @@ vis_sparse/case_study_A8_B7.html
 
 ---
 
-## 📚 Example Run Manifest (`run_manifest_human_only.md`)
+## Example Run Manifest (`run_manifest_human_only.md`)
 
 ```text
 # Human-only single_085_090 run manifest
@@ -176,7 +180,7 @@ vis_sparse/case_study_A8_B7.html
 
 ---
 
-## 🛠 Internal Module Dependencies
+## Internal Module Dependencies
 
 This pipeline depends on:
 
@@ -201,7 +205,7 @@ code/KnowledgeGraph/vis_case_study_A8_B7.py
 
 ---
 
-## 🧪 Example Output in Terminal
+## Example Output in Terminal
 
 ```text
 ==============================================
