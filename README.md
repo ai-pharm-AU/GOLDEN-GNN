@@ -1,7 +1,11 @@
 # GOLDEN-GNN: Advancing Interpretable Cross-Domain Data Harmonization in the CFDE
 Zeru Zhang1, Qi Li2, Cody Nichols3, Robert S Welner4, Hao Chen*, Jake Y. Chen5*, and Zongliang Yue1*
 1. Health Outcomes Research and Policy, Harrison College of Pharmacy, Auburn University, AL, USA
- 2. Mathematics and Computer Science Department, School of Natural Sciences Mathematics & Business, Fisk University, TN, USA3. Computer Science and Software Engineering Department, Samuel Ginn College of Engineering, Auburn University, Auburn, AL, USA4 Hematology & Oncology, School of Medicine, University of Alabama at Birmingham, AL, USA5. Biomedical Informatics and Data Science, School of Medicine, University of Alabama at Birmingham, AL, USA Contact: hzc0134@auburn.edu, jakechen@uab.edu, and zzy0065@auburn.edu
+2. Mathematics and Computer Science Department, School of Natural Sciences Mathematics & Business, Fisk University, TN, USA
+3. Computer Science and Software Engineering Department, Samuel Ginn College of Engineering, Auburn University, Auburn, AL, USA
+4. Hematology & Oncology, School of Medicine, University of Alabama at Birmingham, AL, USA
+5. Biomedical Informatics and Data Science, School of Medicine, University of Alabama at Birmingham, AL, USA
+Contact: hzc0134@auburn.edu, jakechen@uab.edu, and zzy0065@auburn.edu
 
 
 ## Deliverables Index
